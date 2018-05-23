@@ -41,6 +41,7 @@ def word_callback(*args):
     last_word = new_arr[-1]
     last_word = last_word.strip()
     last_word = last_word.lower()
+    length = len(last_word)
     print(last_word)
     is_a_word = False
     total = 0
@@ -55,7 +56,12 @@ def word_callback(*args):
     for word in arr:
         if word == last_word:
             is_a_word = True
-    print(is_a_word)
+    if is_a_word == False:
+        start = text.search(last_word, 1.0, stopindex = END, regexp = True)
+        tag_end = '%s+%dc' % (start, length)
+        text.tag_add('highlight',start, tag_end)
+        text.tag_config('highlight', background='red')
+    
 
 
 def check_quit():
