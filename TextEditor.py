@@ -12,7 +12,7 @@ def init(root, text, char_count):
     menubar = Menu(root)
     filemenu = Menu(menubar, tearoff=0)
     filemenu.add_command(label="Open", command=open_new_window)
-    filemenu.add_command(label="Save", command=file_save)
+    filemenu.add_command(label="Save", command=file_save(text))
     filemenu.add_separator()
     filemenu.add_command(label="Exit", command=check_quit)
     menubar.add_cascade(label="File", menu=filemenu)
@@ -22,12 +22,13 @@ def init(root, text, char_count):
     root.config(menu=menubar)
     while (True):
         char_count.set(str(len(text.get("1.0", 'end-1c'))))
-        text.bind("<space>", word_callback)
+        text.bind("<space>", word_callback(text))
         root.update_idletasks()
         root.update()
 
-def word_callback(*args):
-    print(text.get("1.0", END).split(" ")[len(text.get("1.0", END).split(" "))-1])
+
+def word_callback(text, *args):
+    return (text.get("1.0", END).split(" ")[len(text.get("1.0", END).split(" "))-1])
 
 def check_quit():
     top = Toplevel(height = 1200, width = 600)
@@ -43,7 +44,7 @@ def check_quit():
 
 
 # saves the file as a .txt file
-def file_save():
+def file_save(text):
     f = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
     if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
         return
@@ -89,6 +90,7 @@ def file_open(filename, text):
 
 def main():
     root=Tk("Text Editor")
+    global text
     text = Text(root)
     char_count = IntVar()
     init(root, text, char_count)
