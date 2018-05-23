@@ -40,6 +40,7 @@ def word_callback(*args):
     new_arr = whole_text.split(" ")
     last_word = new_arr[-1]
     last_word = last_word.strip()
+    last_word = last_word.lower()
     print(last_word)
     is_a_word = False
     total = 0

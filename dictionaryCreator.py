@@ -12,13 +12,11 @@ def main(filename):
 			line = line.replace('\xed', '')
 			line = line.replace('\xbb', '')
 			line = line.replace('\xbf', '')
+			line = line.lower()
 			total = 0
-			print(line)
 			for char in line:
 				number = ord(char)
-				print(number)
 				total = total + number
-			print(total)
 			for i in new_dict:
 				if i == total:
 					counter += 1
@@ -49,4 +47,5 @@ def retrieve():
 	dection2 = load_obj("dictionary.txt")
 	print(dection2)
 
+execute()
 retrieve()
