@@ -8,9 +8,15 @@ def main(filename):
 		for line in f:
 			counter = 0
 			line = line.strip()
+			line = line.replace('\ufeff', '')
+			line = line.replace('\xed', '')
+			line = line.replace('\xbb', '')
+			line = line.replace('\xbf', '')
 			total = 0
+			print(line)
 			for char in line:
-				number = ord(char) - 96
+				number = ord(char)
+				print(number)
 				total = total + number
 			print(total)
 			for i in new_dict:
@@ -32,7 +38,8 @@ def load_obj(name):
         return pickle.load(f)
 
 def test():
-	main("test.rtf")
+	test = main("test.txt")
+	save_obj(test, "test.txt")
 
 def execute():
 	diction = main("words.txt")

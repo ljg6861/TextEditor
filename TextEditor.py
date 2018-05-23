@@ -2,8 +2,16 @@
 
 from tkinter import filedialog
 from tkinter import * 
+import pickle
 
 
+
+
+def load_obj(name):
+    with open(name + '.pkl', 'rb') as f:
+        return pickle.load(f)
+
+dictionary = load_obj("dictionary.txt")
 
 #initializes the text editor
 def init(root, text, char_count):
@@ -31,7 +39,23 @@ def word_callback(*args):
     whole_text = text.get("1.0", END)
     new_arr = whole_text.split(" ")
     last_word = new_arr[-1]
+    last_word = last_word.strip()
     print(last_word)
+    is_a_word = False
+    total = 0
+    for char in last_word:
+        print(char)
+        number = ord(char)
+        print(number)
+        total += number
+    print(total)
+    arr = dictionary[total]
+    print(arr)
+    for word in arr:
+        if word == last_word:
+            is_a_word = True
+    print(is_a_word)
+
 
 def check_quit():
     top = Toplevel(height = 1200, width = 600)
